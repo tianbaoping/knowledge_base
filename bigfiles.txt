@@ -1,2 +1,3 @@
+.git/objects/pack/tmp_pack_dqD5UD
 models/BAAI_bge-reranker-base/pytorch_model.bin
 models/BAAI_bge-reranker-base/model.safetensors

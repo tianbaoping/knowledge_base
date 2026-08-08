@@ -21,12 +21,10 @@ logs/
 *.sql
 *.dump
 # 模型、视频、图片素材
-models/
 weights/
 *.mp4
 *.avi
 *.mov
-data/
 # 服务器缓存、临时文件
 tmp/
 temp/
