@@ -1,0 +1,19 @@
+# OCR Service Dependencies (RapidOCR / ONNX Runtime)
+
+# RapidOCR - PaddleOCR PP-OCRv4 compatible, ONNX Runtime based
+rapidocr-onnxruntime>=1.3.0
+
+# Image processing
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# PDF processing
+PyMuPDF>=1.23.0
+
+# Web framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic>=2.0.0
+
+# Logging
+loguru>=0.7.0

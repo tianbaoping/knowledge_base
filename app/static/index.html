@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库管理系统</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">KB</div>
+                <div class="logo-text">知识库管理系统</div>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span><span>系统概览</span>
+                </a>
+                <a href="#" class="nav-item" data-page="knowledge">
+                    <span class="nav-icon">📚</span><span>知识库管理</span>
+                </a>
+                <a href="#" class="nav-item" data-page="import">
+                    <span class="nav-icon">📥</span><span>文件导入</span>
+                </a>
+                <a href="#" class="nav-item" data-page="search">
+                    <span class="nav-icon">🔍</span><span>知识检索</span>
+                </a>
+                <a href="#" class="nav-item" data-page="monitor">
+                    <span class="nav-icon">🖥️</span><span>系统监控</span>
+                </a>
+                <a href="#" class="nav-item" data-page="ocr">
+                    <span class="nav-icon">🔍</span><span>OCR状态</span>
+                </a>
+                <a href="#" class="nav-item" data-page="logs">
+                    <span class="nav-icon">📋</span><span>日志管理</span>
+                </a>
+                <a href="#" class="nav-item" data-page="mcp">
+                    <span class="nav-icon">🔌</span><span>MCP服务</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-indicator" id="sidebarStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">检查连接...</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-title" id="pageTitle">系统概览</div>
+                <div class="header-actions">
+                    <button class="btn-icon" id="refreshBtn" title="刷新">🔄</button>
+                </div>
+            </header>
+
+            <div class="content-area" id="contentArea">
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalBox">
+            <div class="modal-header">
+                <span id="modalTitle">标题</span>
+                <button class="btn-icon" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button class="btn btn-primary" id="modalConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/ocr-panel.js"></script>
+</body>
+</html>

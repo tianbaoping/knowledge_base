@@ -1,0 +1,83 @@
+[Unit]
+Description=Knowledge Base Management System (AI RAG)
+Documentation=https://github.com/your-repo/knowledge-base
+After=network.target network-online.target
+Wants=network.target
+
+# 依赖服务启动顺序
+Requires=network.target
+
+[Service]
+# ==================== 基础配置 ====================
+Type=simple
+User=__USER__
+Group=__GROUP__
+
+# 工作目录 (部署后需修改)
+WorkingDirectory=__INSTALL_DIR__
+
+# ==================== 环境变量 ====================
+Environment=APP_HOST=0.0.0.0
+Environment=APP_PORT=8000
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=MODEL_LOCAL_PATH=__INSTALL_DIR__/models/BAAI_bge-small-zh-v1.5
+Environment=MCP_API_KEY=kb-mcp-secret-key-2024
+
+# ==================== 启动命令 ====================
+# 方式1: 使用预打包环境 (推荐)
+ExecStart=__INSTALL_DIR__/envs/knowledge_base/bin/python -m app.main
+
+# 方式2: 使用 conda 环境
+# ExecStart=/home/user/miniconda3/envs/knowledge_base/bin/python -m app.main
+
+# ==================== 守护进程 & 异常重启 ====================
+# 服务异常退出时自动重启
+Restart=always
+# 启动失败后重试间隔 (秒)
+RestartSec=3
+# 启动超时 (秒)
+TimeoutStartSec=60
+# 停止超时 (秒)
+TimeoutStopSec=30
+# 看门狗: 进程卡死超时重启 (秒)
+WatchdogSec=300
+
+# 重启频率限制: 10秒内重启超过5次则标记为失败
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# ==================== 资源限制 ====================
+# 最大内存使用
+MemoryMax=4G
+# 最大 CPU 使用 (400% = 4核)
+CPUQuota=400%
+
+# ==================== 安全加固 ====================
+# 禁止获取新权限
+NoNewPrivileges=true
+# 只读根文件系统保护 (注释掉如需完全隔离)
+# ProtectSystem=strict
+# ProtectHome=true
+
+# 允许写入的目录
+ReadWritePaths=__INSTALL_DIR__/data
+
+# 允许访问的路径 (可选)
+# ReadOnlyPaths=/etc
+# InaccessiblePaths=/boot /proc/sys
+
+# ==================== 日志配置 (双日志系统) ====================
+# 日志输出到 systemd journal + 程序日志文件
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=knowledge-base
+# journal 日志级别
+LogLevelMax=info
+
+# ==================== 进程ID ====================
+PIDFile=__INSTALL_DIR__/data/logs/service.pid
+
+[Install]
+WantedBy=multi-user.target
+Alias=knowledge-base.service

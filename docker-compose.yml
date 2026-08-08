@@ -1,0 +1,54 @@
+# ============================================================
+# 知识库管理系统 - Docker Compose 部署配置
+# ============================================================
+# 启动:  docker compose up -d
+# 停止:  docker compose down
+# 日志:  docker compose logs -f
+# 重建:  docker compose up -d --build
+# ============================================================
+
+services:
+  knowledge-base:
+    # 使用预构建镜像 (多架构支持)
+    # image: kb-app:latest
+    # 或现场构建:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: knowledge-base
+    ports:
+      - "8000:8000"
+    volumes:
+      # 持久化数据 (知识库、上传文件、日志)
+      - kb_data:/app/data
+      # 挂载模型目录 (可选: 避免在线下载)
+      - ./models:/app/models:ro
+    environment:
+      - MODEL_DEVICE=cpu
+      - QDRANT_LOCATION=/app/data/qdrant
+      - UPLOAD_DIR=/app/data/uploads
+      - LOG_DIR=/app/data/logs
+      - SQLITE_DB_PATH=/app/data/metadata.db
+      - MODEL_LOCAL_PATH=/app/models/BAAI_bge-small-zh-v1.5
+      - RERANKER_LOCAL_PATH=/app/models/BAAI_bge-reranker-base
+      - MCP_API_KEY=kb-mcp-secret-key-2024
+      # 修改端口 (可选)
+      # - APP_PORT=8000
+    restart: unless-stopped
+    # 资源限制 (可选，按需调整)
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 1G
+    # 日志驱动配置
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+volumes:
+  kb_data:
+    driver: local

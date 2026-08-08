@@ -1,0 +1,35 @@
+# 依赖目录
+node_modules/
+venv/
+env/
+# 编译产物
+dist/
+build/
+out/
+target/
+# 日志、缓存
+logs/
+*.log
+*.cache
+# 压缩包、镜像、数据库
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.iso
+*.img
+*.sql
+*.dump
+# 模型、视频、图片素材
+models/
+weights/
+*.mp4
+*.avi
+*.mov
+data/
+# 服务器缓存、临时文件
+tmp/
+temp/
+.DS_Store
+.idea/
+.vscode/
